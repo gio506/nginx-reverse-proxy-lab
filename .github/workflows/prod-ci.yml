@@ -26,11 +26,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Generate local certs
-        run: ./scripts/generate-certs.sh
+        run: bash ./scripts/generate-certs.sh
       - name: Strict validation
         env:
           LAB_MODE: prod
-        run: ./scripts/validate.sh
+        run: bash ./scripts/validate.sh
 
   boot_prod:
     runs-on: ubuntu-latest
@@ -39,7 +39,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Generate local certs
-        run: ./scripts/generate-certs.sh
+        run: bash ./scripts/generate-certs.sh
       - name: Boot prod stack
         run: docker compose -f docker-compose.yml -f docker-compose.prod.yml up --build -d
 
@@ -50,17 +50,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Generate local certs
-        run: ./scripts/generate-certs.sh
+        run: bash ./scripts/generate-certs.sh
       - name: Boot prod stack
         run: docker compose -f docker-compose.yml -f docker-compose.prod.yml up --build -d
       - name: Run full checks
         env:
           LAB_MODE: prod
         run: |
-          ./scripts/smoke.sh
-          ./scripts/headers-check.sh
-          ./scripts/tls-check.sh
-          ./scripts/rate-limit-check.sh
+          bash ./scripts/smoke.sh
+          bash ./scripts/headers-check.sh
+          bash ./scripts/tls-check.sh
+          bash ./scripts/rate-limit-check.sh
 
   docs_verify:
     runs-on: ubuntu-latest
