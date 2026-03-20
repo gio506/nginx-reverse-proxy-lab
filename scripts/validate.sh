@@ -21,6 +21,8 @@ shellcheck "${ROOT}"/scripts/*.sh
 compose config >/dev/null
 
 docker run --rm \
+  --add-host app1:127.0.0.1 \
+  --add-host app2:127.0.0.1 \
   -v "${ROOT}/nginx/nginx.conf:/etc/nginx/nginx.conf:ro" \
   -v "${ROOT}/nginx/conf.d:/etc/nginx/conf.d:ro" \
   -v "${ROOT}/nginx/certs:/etc/nginx/certs:ro" \
