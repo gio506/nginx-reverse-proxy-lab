@@ -42,7 +42,7 @@ This lab shows a small but realistic reverse-proxy setup:
    ```
 3. Start the stack:
    ```bash
-   docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build -d
+   docker compose -f docker-compose.yml -f docker-compose.prod.yml up --build -d
    ```
 4. Stop the stack:
    ```bash
@@ -51,7 +51,7 @@ This lab shows a small but realistic reverse-proxy setup:
 
 Windows note: use Git Bash or WSL for the shell scripts.
 
-On the `dev` branch, the proxy adds `X-Environment: dev` to make quick debugging easier.
+On the `prod` branch, debug headers are removed and rate limits are stricter than `dev` and `main`.
 
 ## Test
 
@@ -91,7 +91,7 @@ Detailed rollback steps live in [`docs/rollback.md`](docs/rollback.md).
 - `scripts/`: cert generation, validation, smoke checks, and cleanup helpers
 - `docker-compose.yml`: shared stack definition
 - `docker-compose.main.yml`: `main` branch runtime overrides
-- `docker-compose.dev.yml`: `dev` branch runtime overrides
+- `docker-compose.prod.yml`: `prod` branch runtime overrides
 - `Makefile`: common project commands
 - `CHEATSHEET.md`: short command reference
 - `FILES_EXPLAINED.md`: one-line file and folder summary
