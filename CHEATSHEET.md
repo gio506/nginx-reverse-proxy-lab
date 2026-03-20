@@ -3,9 +3,9 @@
 ## Compose
 
 ```bash
-docker compose -f docker-compose.yml -f docker-compose.main.yml up --build -d
-docker compose -f docker-compose.yml -f docker-compose.main.yml down --remove-orphans
-docker compose -f docker-compose.yml -f docker-compose.main.yml logs -f nginx
+docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build -d
+docker compose -f docker-compose.yml -f docker-compose.dev.yml down --remove-orphans
+docker compose -f docker-compose.yml -f docker-compose.dev.yml logs -f nginx
 ```
 
 ## Curl Route Checks
@@ -27,14 +27,14 @@ openssl s_client -connect localhost:443 -servername localhost
 ## Nginx Config Test
 
 ```bash
-docker compose -f docker-compose.yml -f docker-compose.main.yml exec nginx nginx -t
+docker compose -f docker-compose.yml -f docker-compose.dev.yml exec nginx nginx -t
 ./scripts/validate.sh
 ```
 
 ## Logs
 
 ```bash
-docker compose -f docker-compose.yml -f docker-compose.main.yml logs -f app1
-docker compose -f docker-compose.yml -f docker-compose.main.yml logs -f app2
-docker compose -f docker-compose.yml -f docker-compose.main.yml logs -f nginx
+docker compose -f docker-compose.yml -f docker-compose.dev.yml logs -f app1
+docker compose -f docker-compose.yml -f docker-compose.dev.yml logs -f app2
+docker compose -f docker-compose.yml -f docker-compose.dev.yml logs -f nginx
 ```

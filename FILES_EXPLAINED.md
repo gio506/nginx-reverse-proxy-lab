@@ -11,9 +11,11 @@
 - `backends/app2/Dockerfile`: container image build for app2
 - `backends/app2/requirements.txt`: Python dependency pin for app2
 - `docker-compose.yml`: shared service, network, and volume layout
+- `docker-compose.dev.yml`: `dev` branch overrides for local-friendly behavior
 - `docker-compose.main.yml`: stable branch override values for local and CI use
 - `docs/architecture.md`: architecture and request flow summary
 - `docs/branch-flow.md`: branch roles and promotion steps
+- `docs/dev-notes.md`: branch-specific notes for active development work
 - `docs/pipeline-flow.md`: CI/CD trigger and stage behavior by branch
 - `docs/release-notes-template.md`: reusable release note template
 - `docs/rollback.md`: rollback and recovery steps
@@ -33,6 +35,7 @@
 - `scripts/headers-check.sh`: security-header validation helper
 - `scripts/rate-limit-check.sh`: basic rate-limit behavior test
 - `scripts/cleanup.sh`: safe local stack teardown
+- `scripts/dev-quick-check.sh`: fast route and header checks for the `dev` branch
 - `Makefile`: project command shortcuts
 - `README.md`: overview, usage, promotion flow, and repo map
 - `CHEATSHEET.md`: fast command reference
