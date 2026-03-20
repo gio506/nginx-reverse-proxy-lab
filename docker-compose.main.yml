@@ -1,0 +1,10 @@
+services:
+  app1:
+    environment:
+      APP_ENV: main
+      APP_VERSION: 1.0.0-main
+
+  app2:
+    environment:
+      APP_ENV: main
+      APP_VERSION: 1.0.0-main

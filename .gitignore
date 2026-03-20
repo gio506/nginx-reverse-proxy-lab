@@ -1,0 +1,16 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+dist/
+build/
+.DS_Store
+Thumbs.db
+.env
+nginx/certs/*.crt
+nginx/certs/*.csr
+nginx/certs/*.key
+nginx/certs/*.srl
+nginx/certs/*.pem
+!nginx/certs/.gitkeep
+artifacts/

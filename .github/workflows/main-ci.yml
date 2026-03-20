@@ -1,0 +1,88 @@
+name: main-ci
+
+on:
+  workflow_dispatch:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install lint tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y shellcheck
+          python3 -m pip install --user yamllint
+      - name: Lint shell and YAML
+        run: |
+          shellcheck scripts/*.sh
+          ~/.local/bin/yamllint .
+
+  validate:
+    runs-on: ubuntu-latest
+    needs: lint
+    environment: main
+    steps:
+      - uses: actions/checkout@v4
+      - name: Generate local certs
+        run: ./scripts/generate-certs.sh
+      - name: Validate
+        env:
+          LAB_MODE: main
+        run: ./scripts/validate.sh
+
+  boot:
+    runs-on: ubuntu-latest
+    needs: validate
+    environment: main
+    steps:
+      - uses: actions/checkout@v4
+      - name: Generate local certs
+        run: ./scripts/generate-certs.sh
+      - name: Boot stack
+        run: docker compose -f docker-compose.yml -f docker-compose.main.yml up --build -d
+
+  extended_smoke:
+    runs-on: ubuntu-latest
+    needs: boot
+    environment: main
+    steps:
+      - uses: actions/checkout@v4
+      - name: Generate local certs
+        run: ./scripts/generate-certs.sh
+      - name: Boot stack
+        run: docker compose -f docker-compose.yml -f docker-compose.main.yml up --build -d
+      - name: Run extended tests
+        env:
+          LAB_MODE: main
+        run: |
+          ./scripts/smoke.sh
+          ./scripts/headers-check.sh
+          ./scripts/tls-check.sh
+
+  hardening:
+    runs-on: ubuntu-latest
+    needs: extended_smoke
+    environment: main
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check hardening config
+        run: |
+          grep -q 'server_tokens off' nginx/nginx.conf
+          grep -q 'X-Content-Type-Options' nginx/conf.d/headers.conf
+          grep -q 'limit_req_zone' nginx/conf.d/rate-limit.conf
+
+  snapshot:
+    runs-on: ubuntu-latest
+    needs: hardening
+    environment: main
+    steps:
+      - uses: actions/checkout@v4
+      - name: Create config snapshot
+        run: |
+          mkdir -p artifacts
+          tar -czf artifacts/main-config-snapshot.tgz nginx docker-compose.yml docker-compose.main.yml scripts docs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: main-config-snapshot
+          path: artifacts/main-config-snapshot.tgz

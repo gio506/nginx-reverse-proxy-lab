@@ -1,0 +1,39 @@
+# Files Explained
+
+- `.github/workflows/dev-ci.yml`: automatic CI for the `dev` branch
+- `.github/workflows/main-ci.yml`: manual validation workflow for the `main` branch
+- `.github/workflows/prod-ci.yml`: manual release workflow for the `prod` branch
+- `.gitattributes`: keeps shell, YAML, Python, and Markdown files on LF line endings
+- `backends/app1/app.py`: Flask demo API for app1
+- `backends/app1/Dockerfile`: container image build for app1
+- `backends/app1/requirements.txt`: Python dependency pin for app1
+- `backends/app2/app.py`: Flask demo API for app2
+- `backends/app2/Dockerfile`: container image build for app2
+- `backends/app2/requirements.txt`: Python dependency pin for app2
+- `docker-compose.yml`: shared service, network, and volume layout
+- `docker-compose.main.yml`: stable branch override values for local and CI use
+- `docs/architecture.md`: architecture and request flow summary
+- `docs/branch-flow.md`: branch roles and promotion steps
+- `docs/pipeline-flow.md`: CI/CD trigger and stage behavior by branch
+- `docs/release-notes-template.md`: reusable release note template
+- `docs/rollback.md`: rollback and recovery steps
+- `docs/troubleshooting.md`: common local issues and fixes
+- `nginx/nginx.conf`: top-level Nginx config with HTTP, gzip, and server block
+- `nginx/conf.d/app1.conf`: app1 upstream definition
+- `nginx/conf.d/app2.conf`: app2 upstream definition
+- `nginx/conf.d/headers.conf`: shared response security headers
+- `nginx/conf.d/rate-limit.conf`: shared rate-limit zone configuration
+- `nginx/conf.d/tls.conf`: local TLS certificate and protocol settings
+- `nginx/certs/.gitkeep`: keeps the cert directory in git without committing certs
+- `scripts/lib.sh`: shared shell helpers for compose file handling
+- `scripts/generate-certs.sh`: creates local self-signed certs for the lab
+- `scripts/validate.sh`: lint and config validation helper
+- `scripts/smoke.sh`: HTTP route smoke tests
+- `scripts/tls-check.sh`: HTTPS smoke tests
+- `scripts/headers-check.sh`: security-header validation helper
+- `scripts/rate-limit-check.sh`: basic rate-limit behavior test
+- `scripts/cleanup.sh`: safe local stack teardown
+- `Makefile`: project command shortcuts
+- `README.md`: overview, usage, promotion flow, and repo map
+- `CHEATSHEET.md`: fast command reference
+- `FILES_EXPLAINED.md`: one-line explanation of important files and folders
