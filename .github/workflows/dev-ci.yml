@@ -29,11 +29,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Generate local certs
-        run: ./scripts/generate-certs.sh
+        run: bash ./scripts/generate-certs.sh
       - name: Validate compose and nginx
         env:
           LAB_MODE: dev
-        run: ./scripts/validate.sh
+        run: bash ./scripts/validate.sh
 
   boot:
     runs-on: ubuntu-latest
@@ -41,7 +41,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Generate local certs
-        run: ./scripts/generate-certs.sh
+        run: bash ./scripts/generate-certs.sh
       - name: Boot stack
         run: docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build -d
       - name: Show status
@@ -53,15 +53,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Generate local certs
-        run: ./scripts/generate-certs.sh
+        run: bash ./scripts/generate-certs.sh
       - name: Boot stack
         run: docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build -d
       - name: Run smoke checks
         env:
           LAB_MODE: dev
         run: |
-          ./scripts/smoke.sh
-          ./scripts/headers-check.sh
+          bash ./scripts/smoke.sh
+          bash ./scripts/headers-check.sh
 
   cleanup:
     runs-on: ubuntu-latest
@@ -70,8 +70,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Generate local certs
-        run: ./scripts/generate-certs.sh
+        run: bash ./scripts/generate-certs.sh
       - name: Cleanup
         env:
           LAB_MODE: dev
-        run: ./scripts/cleanup.sh
+        run: bash ./scripts/cleanup.sh

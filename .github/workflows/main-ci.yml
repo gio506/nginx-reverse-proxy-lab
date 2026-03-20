@@ -25,11 +25,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Generate local certs
-        run: ./scripts/generate-certs.sh
+        run: bash ./scripts/generate-certs.sh
       - name: Validate
         env:
           LAB_MODE: main
-        run: ./scripts/validate.sh
+        run: bash ./scripts/validate.sh
 
   boot:
     runs-on: ubuntu-latest
@@ -38,7 +38,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Generate local certs
-        run: ./scripts/generate-certs.sh
+        run: bash ./scripts/generate-certs.sh
       - name: Boot stack
         run: docker compose -f docker-compose.yml -f docker-compose.main.yml up --build -d
 
@@ -49,16 +49,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Generate local certs
-        run: ./scripts/generate-certs.sh
+        run: bash ./scripts/generate-certs.sh
       - name: Boot stack
         run: docker compose -f docker-compose.yml -f docker-compose.main.yml up --build -d
       - name: Run extended tests
         env:
           LAB_MODE: main
         run: |
-          ./scripts/smoke.sh
-          ./scripts/headers-check.sh
-          ./scripts/tls-check.sh
+          bash ./scripts/smoke.sh
+          bash ./scripts/headers-check.sh
+          bash ./scripts/tls-check.sh
 
   hardening:
     runs-on: ubuntu-latest
